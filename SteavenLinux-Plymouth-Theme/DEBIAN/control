@@ -1,0 +1,8 @@
+Package: SteavenLinux-Plymouth-Theme
+Version: 1.0
+Section: utils
+Priority: optional
+Architecture: all
+Depends: git, plymouth, plymouth-themes
+Maintainer: omarhanykasban <omarhanykasban706@gmail.com>
+Description: SteavenLinux-Plymouth-Theme

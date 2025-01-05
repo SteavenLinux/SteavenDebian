@@ -1,0 +1,8 @@
+Package: steavenlinuxname
+Version: 1.0
+Section: utils
+Priority: optional
+Architecture: all
+Depends: git
+Maintainer: omarhanykasban <omarhanykasban706@gmail.com>
+Description: This package provides branding assets and RPM triggers for SteavenLinux.

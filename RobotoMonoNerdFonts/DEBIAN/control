@@ -1,0 +1,8 @@
+Package: RobotoMonoNerdFonts
+Version: 1.0
+Section: utils
+Priority: optional
+Architecture: all
+Depends: git
+Maintainer: omarhanykasban <omarhanykasban706@gmail.com>
+Description: RobotoMonoNerdFonts.

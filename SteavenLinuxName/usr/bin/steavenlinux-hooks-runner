@@ -1,0 +1,56 @@
+#!/bin/bash
+
+update_os_release() {
+    local os_release_file="/etc/os-release"
+    if [[ -f $os_release_file ]]; then
+        echo "Updating /etc/os-release for SteavenLinux..."
+        sed -i -e 's/^NAME="Debian GNU\/Linux"/NAME="SteavenLinux"/' \
+       -e 's/^id=debian/id=SteavenLinux/' \
+       -e 's/^ID_LIKE=debian/ID_LIKE=debian/' \
+       -e 's/^HOME_URL="https:\/\/www.debian.org"/HOME_URL="https:\/\/github.com\/SteavenLinux"/' \
+       -e 's/^SUPPORT_URL="https:\/\/www.debian.org\/support"/SUPPORT_URL="https:\/\/github.com\/SteavenLinux"/' \
+       -e 's/^BUG_REPORT_URL="https:\/\/bugs.debian.org\/"/BUG_REPORT_URL="https:\/\/bugs.debian.org\/"/' \
+       -e '/^logo=/d' \
+       -e 's/^VERSION_CODENAME=bookworm/ID_LIKE=debian/g' $os_release_file
+
+    else
+        echo "Error: /etc/os-release not found!" >&2
+        exit 1
+    fi
+}
+
+update_lsb_release() {
+    local lsb_release_file="/etc/lsb-release"
+
+    if [[ -f $lsb_release_file ]]; then
+        echo "Updating /etc/lsb-release for SteavenLinux..."
+        # Add your specific updates for lsb-release here
+        # For example, set DISTRIB_ID="SteavenLinux"
+    else
+        echo "Error: /etc/lsb-release not found!" >&2
+        exit 1
+    fi
+}
+
+update_gdm_logo() {
+    echo "Updating GNOME login screen logo..."
+    sudo sed -i "s|logo='/usr/share/images/vendor-logos/logo-text-version-64.png'|logo='/usr/share/pixmaps/steavenlinux-logo.png'|" /etc/gdm3/greeter.dconf-defaults
+    echo -e "[org.gnome.login-screen]\nenable-smartcard-authentication=false\nlogo='/usr/share/pixmaps/steavenlinux-logo.png'" | sudo tee /usr/share/glib-2.0/schemas/org.gnome.login-screen.gschema.override
+    sudo glib-compile-schemas /usr/share/glib-2.0/schemas/
+}
+
+case "$1" in
+    os-release)
+        update_os_release
+        ;;
+    lsb-release)
+        update_lsb_release
+        ;;
+    gdm)
+        update_gdm_logo
+        ;;
+    *)
+        echo "Unknown trigger: $1"
+        exit 1
+        ;;
+esac
