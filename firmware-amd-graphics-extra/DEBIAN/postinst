@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Update initramfs after installation
+update-initramfs -u
+
+exit 0
